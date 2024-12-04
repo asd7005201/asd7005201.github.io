@@ -22,7 +22,7 @@ jobs:
 
     # 3. Hugo 사이트 빌드
     - name: Build Hugo site
-      run: hugo --minify
+      run: hugo -D
 
     # 4. GitHub Pages 배포 (public 디렉토리)
     - name: Deploy to GitHub Pages
