@@ -1,34 +1,33 @@
-name: Deploy from Dev to GitHub Pages
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - dev
+      - dev  # dev 브랜치에 푸시할 때 트리거
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. 저장소 클론
     - name: Checkout repository
       uses: actions/checkout@v3
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Ensure HTTPS for Git
-      run: git config --global url."https://github.com/".insteadOf "git@github.com:"
-
+    # 2. Hugo 설치
     - name: Setup Hugo
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
 
+    # 3. Hugo 빌드
     - name: Build Hugo site
-      run: hugo -D
+      run: hugo -D  # Draft 포함 빌드
 
+    # 4. 빌드 결과물을 GitHub Pages에 배포
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./public
-        publish_branch: gh-pages
+        personal_token: ${{ secrets.ACCESS_TOKEN }}  # Personal Access Token 사용
+        publish_dir: ./public  # 빌드 결과물 디렉토리
+        publish_branch: gh-pages  # 배포 브랜치
