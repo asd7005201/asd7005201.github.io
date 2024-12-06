@@ -1,9 +1,9 @@
-name: Deploy from Dev to GitHub Pages
+name: Deploy to GitHub Pages using ACCESS_TOKEN
 
 on:
   push:
     branches:
-      - dev  # dev 브랜치에 푸시가 발생할 때 트리거
+      - dev  # dev 브랜치에 푸시할 때 실행
 
 jobs:
   build-and-deploy:
@@ -20,17 +20,14 @@ jobs:
       with:
         hugo-version: 'latest'
 
-    # 3. Hugo 사이트 빌드
+    # 3. Hugo 빌드
     - name: Build Hugo site
-      run: hugo -D  # Draft 포함 빌드
+      run: hugo -D
 
-    # 4. GitHub Pages 배포 (public 디렉토리)
+    # 4. GitHub Pages에 배포
     - name: Deploy to GitHub Pages
       uses: peaceiris/actions-gh-pages@v3
       with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}  # GITHUB_TOKEN 사용
+        github_token: ${{ secrets.ACCESS_TOKEN }}  # ACCESS_TOKEN 사용
         publish_dir: ./public
         publish_branch: gh-pages
-
-#        github_token: ${{ secrets.ACCESS_TOKEN }}
-
