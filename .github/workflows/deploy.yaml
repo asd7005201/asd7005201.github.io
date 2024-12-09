@@ -21,7 +21,8 @@ jobs:
       uses: peaceiris/actions-hugo@v2
       with:
         hugo-version: 'latest'
-
+        extended: true
+        
     # 3. Hugo 빌드
     - name: Build Hugo site
       run: hugo -D  # Draft 포함 빌드
